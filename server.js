@@ -4,21 +4,21 @@
 const PORT = process.env.PORT || 3001;
 const path = require('path');
 const fs = require('fs');
-
-
 const express = require('express');
 const app = express();
+const noteItems = require('./db/db.json');
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static('public'));
-app.use(express.urlencoded({ extended: true }));
-const noteItems = require('./db/db.json');
+
+
 
 //INTIALIZE GET METHODS AS PER ASSIGNMENT REQUIREMENTS, UTILIZE MODULE METHOD EXAMPLE 
 app.get('/', (req, res) => {res.sendFile(path.join(__dirname, './public/index.html'));});
 app.get('*', (req, res) => {res.sendFile(path.join(__dirname, './public/index.html'));});
 app.get('/notes', (req, res) => {res.sendFile(path.join(__dirname, './public/notes.html'));});
-app.get('/api/notes', (req, res) => {res.json(noteItems);});
-//app.get('/api/notes', (req, res) => {res.json(noteItems.slice(1));});
+//app.get('/api/notes', (req, res) => {res.json(noteItems);});
+app.get('/api/notes', (req, res) => {res.json(noteItems.slice(1));});
 
 //ADD ELEMENT FUNCTION
 function addElement(note, array) {
