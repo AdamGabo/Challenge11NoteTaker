@@ -14,19 +14,26 @@ app.use(express.static('public'));
 
 
 //INTIALIZE GET METHODS AS PER ASSIGNMENT REQUIREMENTS, UTILIZE MODULE METHOD EXAMPLE 
+app.get('/api/notes', (req, res) => {res.json(noteItems);});
 app.get('/', (req, res) => {res.sendFile(path.join(__dirname, './public/index.html'));});
-app.get('*', (req, res) => {res.sendFile(path.join(__dirname, './public/index.html'));});
 app.get('/notes', (req, res) => {res.sendFile(path.join(__dirname, './public/notes.html'));});
-//app.get('/api/notes', (req, res) => {res.json(noteItems);});
-app.get('/api/notes', (req, res) => {res.json(noteItems.slice(1));});
+app.get('*', (req, res) => {res.sendFile(path.join(__dirname, './public/index.html'));});
+
+//app.get('/api/notes', (req, res) => {res.json(noteItems.slice(1));});
 
 //ADD ELEMENT FUNCTION
-function addElement(note, array) {
-    
-    note.id = array[0];
-    array.push(note);
+// function addElement(note, body) {
 
-    fs.writeFileSync(path.join(__dirname, './db/db.json'), JSON.stringify(array, null, 2));
+
+//     note.id = body[0];
+//     body.push(note);
+//     fs.writeFileSync(path.join(__dirname, './db/db.json'), JSON.stringify(body, null, 2));
+//     return note;
+// }
+function addElement(notes, body) {
+    const note = body;
+    notes.push(note);
+    fs.writeFileSync(path.join(__dirname, './db/db.json'), JSON.stringify({notes}, null, 2));
     return note;
 }
 //POST ELEMENT UTILIZING THE addElement FUNCTION
@@ -34,14 +41,14 @@ app.post('/api/notes', (req, res) => {res.json(addElement(req.body, noteItems));
 //BONUS DELETE 
 
 //DELETE ELEMENT BASED ON ID 
-function deleteElement(id, array) {
-    //FOR LOOP WHICH GOES THROUGH EACH ITEM IN THE ARRAY 
-    for (let i = 0; i < array.length; i++) {
-        if (array[i].id == id) {
+function deleteElement(id, body) {
+    //FOR LOOP WHICH GOES THROUGH EACH ITEM IN THE body 
+    for (let i = 0; i < body.length; i++) {
+        if (body[i].id == id) {
             //GET ONLY THAT ONE ELEMENT IN THE ARRAY USING THE SPLICE METHOD
-            array.splice(i, 1);
+            body.splice(i, 1);
             //FS WRITE FILE 
-            fs.writeFileSync(path.join(__dirname, './db/db.json'),JSON.stringify(array, null, 2));
+            fs.writeFileSync(path.join(__dirname, './db/db.json'),JSON.stringify(body, null, 2));
             //BREAK ONCE THE DESIRED ELEMENT HAS BEEN DELETED 
             break;
         }
@@ -50,4 +57,4 @@ function deleteElement(id, array) {
 //DELETE ELEMENT BASED OFF OF ID 
 app.delete('/api/notes/:id', (req, res) => {deleteElement(req.params.id, noteItems);res.json(true);});
 //LISTEN METHOD FOR SERVER Express.js, AS PER MODULE 
-app.listen(PORT, () => {console.log(`API server now on port ${PORT}!`);});
+app.listen(PORT, () => {console.log(`port: ${PORT}!`);});
