@@ -1,17 +1,24 @@
-[
-  {
-    "title": "test",
-    "text": "test",
-    "id": "0"
-  },
-  {
-    "title": "test",
-    "text": "test",
-    "id": "1"
-  },
-  {
-    "title": "test",
-    "text": "test",
-    "id": "2"
+{
+    "notes": [
+      {
+        "title": "test",
+        "text": "test",
+        "id": "0"
+      },
+      {
+        "title": "test",
+        "text": "test",
+        "id": "1"
+      },
+      {
+        "title": "test",
+        "text": "test",
+        "id": "2"
+      },
+      {
+        "title": "test2",
+        "text": "test",
+        "id": "3"
+      }
+    ]
   }
-]
